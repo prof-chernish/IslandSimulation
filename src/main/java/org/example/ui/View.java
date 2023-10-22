@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
 
 public class View {
     private final IslandService islandService = new IslandService();
-    private static final int delay = 1;
+    private static final int delay = 10;
 
     public void start() throws InterruptedException {
         islandService.initialize();

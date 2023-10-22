@@ -25,24 +25,27 @@ public class IslandService {
     public void initialize() throws InterruptedException {
         Location[][] locations = island.getLocations();
         int id = 0;
-        ExecutorService service = Executors.newFixedThreadPool(5);
-        for (int i = 0; i < locations.length; i++) {
-            for (int j = 0; j < locations[0].length; j++) {
-                locations[i][j] = new Location();
-                locations[i][j].setId(id++);
-                int finalI = i;
-                int finalJ = j;
-                service.submit(() -> {
-                    try {
-                        locationService.initialize(locations[finalI][finalJ]);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                });
+        ExecutorService service;
+        do {
+            service = Executors.newFixedThreadPool(3);
+            for (int i = 0; i < locations.length; i++) {
+                for (int j = 0; j < locations[0].length; j++) {
+                    locations[i][j] = new Location();
+                    locations[i][j].setId(id++);
+                    int finalI = i;
+                    int finalJ = j;
+                    service.submit(() -> {
+                        try {
+                            locationService.initialize(locations[finalI][finalJ]);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    });
+                }
             }
-        }
-        service.shutdown();
-        service.awaitTermination(1, TimeUnit.MINUTES);
+            service.shutdown();
+
+        } while (!service.awaitTermination(10, TimeUnit.MINUTES));
     }
 
     public int getAllAnimalsCount() {
@@ -58,7 +61,7 @@ public class IslandService {
 
     public void feedAllAnimals() throws InterruptedException {
         Location[][] locations = island.getLocations();
-        ExecutorService service = Executors.newFixedThreadPool(5);
+        ExecutorService service = Executors.newFixedThreadPool(3);
         for (int i = 0; i < locations.length; i++) {
             for (int j = 0; j < locations[0].length; j++) {
                 int finalI = i;
@@ -74,7 +77,7 @@ public class IslandService {
 
     public void reproduceAllAnimals() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, InterruptedException {
         Location[][] locations = island.getLocations();
-        ExecutorService service = Executors.newFixedThreadPool(5);
+        ExecutorService service = Executors.newFixedThreadPool(3);
         for (int i = 0; i < locations.length; i++) {
             for (int j = 0; j < locations[0].length; j++) {
                 int finalI = i;
@@ -95,7 +98,7 @@ public class IslandService {
     public void moveAllAnimals() throws InterruptedException {
         Location[][] locations = island.getLocations();
         Map<Animal, Location> newLocationsForAnimals = new HashMap<>();
-        ExecutorService service = Executors.newFixedThreadPool(5);
+        ExecutorService service = Executors.newFixedThreadPool(3);
         final Location[] newLocation = new Location[1];
         for (int i = 0; i < locations.length; i++) {
             for (int j = 0; j < locations[0].length; j++) {
@@ -135,6 +138,7 @@ public class IslandService {
         }
         service.shutdown();
         service.awaitTermination(1, TimeUnit.MINUTES);
+
         newLocationsForAnimals.entrySet().forEach(entry -> locationService.addAnimal(entry.getKey(), entry.getValue()));
     }
 
@@ -150,7 +154,7 @@ public class IslandService {
 
     public void removeAllDeadAnimals() throws InterruptedException {
         Location[][] locations = island.getLocations();
-        ExecutorService service = Executors.newFixedThreadPool(5);
+        ExecutorService service = Executors.newFixedThreadPool(3);
         for (int i = 0; i < locations.length; i++) {
             for (int j = 0; j < locations[0].length; j++) {
                 int finalI = i;
@@ -171,7 +175,7 @@ public class IslandService {
 
     public void growAllPlants() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, InterruptedException {
         Location[][] locations = island.getLocations();
-        ExecutorService service = Executors.newFixedThreadPool(5);
+        ExecutorService service = Executors.newFixedThreadPool(3);
         for (int i = 0; i < locations.length; i++) {
             for (int j = 0; j < locations[0].length; j++) {
                 int finalI = i;

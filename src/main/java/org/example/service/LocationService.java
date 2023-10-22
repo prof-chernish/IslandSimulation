@@ -20,49 +20,49 @@ public class LocationService {
     private final PlantService plantService = new PlantService();
 
 
+
     public void initialize(Location location) throws InterruptedException {
         Set<Class<? extends Animal>> animalClasses = AnimalConfig.animalClasses;
         Set<Class<? extends Plant>> plantClasses = PlantConfig.plantClasses;
         Map<Class<? extends Animal>, List<Animal>> animalMap = location.getAnimalMap();
         Map<Class<? extends Plant>, List<Plant>> plantMap = location.getPlantMap();
         Map<Class<? extends Animal>, Integer> animalsCount = location.getAnimalsCount();
-        ExecutorService service = Executors.newFixedThreadPool(5);
-        animalClasses.forEach(animalClass -> service.submit(() -> {
-            List<Animal> animalList = new ArrayList<>();
-            int animalMaxCount = AnimalConfig.animalMaxCount.get(animalClass);
-            int animalCount = ThreadLocalRandom.current().nextInt(0, animalMaxCount + 1);
-            synchronized (animalsCount) {
+        ExecutorService service;
+        do {
+            service = Executors.newFixedThreadPool(3);
+            ExecutorService finalService = service;
+            animalClasses.forEach(animalClass -> finalService.submit(() -> {
+                List<Animal> animalList = new ArrayList<>();
+                int animalMaxCount = AnimalConfig.animalMaxCount.get(animalClass);
+                int animalCount = ThreadLocalRandom.current().nextInt(0, animalMaxCount + 1);
                 animalsCount.put(animalClass, animalCount);
-            }
-            for (int i = 0; i < animalCount; i++) {
-                try {
-                    animalList.add(animalService.reproduce(animalClass));
-                } catch (NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
-                    e.printStackTrace();
+                for (int i = 0; i < animalCount; i++) {
+                    try {
+                        animalList.add(animalService.reproduce(animalClass));
+                    } catch (NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
+                        e.printStackTrace();
+                    }
                 }
-            }
-            synchronized (animalMap) {
                 animalMap.put(animalClass, animalList);
-            }
-        }));
+            }));
 
-        plantClasses.forEach(plantClass -> service.submit(() -> {
-            List<Plant> plantList = new ArrayList<>();
-            int plantMaxCount = PlantConfig.plantMaxCount.get(plantClass);
-            int plantCount = ThreadLocalRandom.current().nextInt(0, plantMaxCount + 1);
-            for (int i = 0; i < plantCount; i++) {
-                try {
-                    plantList.add(plantService.grow(plantClass));
-                } catch (NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
-                    e.printStackTrace();
+
+            plantClasses.forEach(plantClass -> finalService.submit(() -> {
+                List<Plant> plantList = new ArrayList<>();
+                int plantMaxCount = PlantConfig.plantMaxCount.get(plantClass);
+                int plantCount = ThreadLocalRandom.current().nextInt(0, plantMaxCount + 1);
+                for (int i = 0; i < plantCount; i++) {
+                    try {
+                        plantList.add(plantService.grow(plantClass));
+                    } catch (NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
+                        e.printStackTrace();
+                    }
                 }
-            }
-            synchronized (plantMap) {
                 plantMap.put(plantClass, plantList);
-            }
-        }));
-        service.shutdown();
-        service.awaitTermination(1, TimeUnit.MINUTES);
+            }));
+            service.shutdown();
+
+        } while (!service.awaitTermination(10, TimeUnit.MINUTES));
     }
 
 
@@ -125,7 +125,7 @@ public class LocationService {
 
     public void reproduceAnimalsInLocation(Location location) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, InterruptedException {
         Map<Class<? extends Animal>, List<Animal>> animalMap = location.getAnimalMap();
-        ExecutorService service = Executors.newFixedThreadPool(5);
+        ExecutorService service = Executors.newFixedThreadPool(3);
         for (Map.Entry<Class<? extends Animal>, List<Animal>> entry: animalMap.entrySet()) {
             service.submit(() -> {
                 Class<? extends Animal> animalClass = entry.getKey();
@@ -149,7 +149,7 @@ public class LocationService {
 
     public void growPlantsInLocation(Location location) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, InterruptedException {
         Map<Class<? extends Plant>, List<Plant>> plantMap = location.getPlantMap();
-        ExecutorService service = Executors.newFixedThreadPool(5);
+        ExecutorService service = Executors.newFixedThreadPool(3);
         for (Map.Entry<Class<? extends Plant>, List<Plant>> entry: plantMap.entrySet()) {
             service.submit(() -> {
                 Class<? extends Plant> plantClass = entry.getKey();
@@ -175,7 +175,7 @@ public class LocationService {
     public Map<Animal, Integer> getStepsForAnimalsInLocation(Location location) throws InterruptedException {
         Map<Animal, Integer> map = new HashMap<>();
         Map<Class<? extends Animal>, List<Animal>> animalMap = location.getAnimalMap();
-        ExecutorService service = Executors.newFixedThreadPool(5);
+        ExecutorService service = Executors.newFixedThreadPool(3);
         animalMap.entrySet().forEach(entry -> service.submit(() -> entry.getValue().forEach(animal -> map.put(animal, animalService.move(animal)))));
         service.shutdown();
         service.awaitTermination(1, TimeUnit.MINUTES);
@@ -213,7 +213,7 @@ public class LocationService {
     public void removeDeadAnimalsInLocation(Location location) throws InterruptedException {
         Map<Class<? extends Animal>, List<Animal>> animalMap = location.getAnimalMap();
         Map<Class<? extends Animal>, Integer> animalsCount = location.getAnimalsCount();
-        ExecutorService service = Executors.newFixedThreadPool(5);
+        ExecutorService service = Executors.newFixedThreadPool(3);
         animalMap.entrySet().forEach(entry -> service.submit(() -> {
             Class<? extends Animal> animalClass = entry.getKey();
             List<Animal> animalList = entry.getValue();

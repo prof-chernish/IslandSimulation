@@ -4,70 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0553a62f-70f3-44cd-8715-a55d3ce2a739" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Herbivore.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/IslandItem.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Predator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/config/AnimalConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/model/Island.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/model/Location.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/model/animal/Animal.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/model/animal/Fox.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/model/animal/Sheep.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/model/animal/Wolf.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/model/plant/Flower.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/model/plant/Fruit.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/model/plant/Grass.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/model/plant/Plant.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/model/plant/Vegetable.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/service/AnimalService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/service/IslandService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/service/LocationService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/service/PlantService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/ui/View.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/util/PropertiesReader.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/animalconfig/bear.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/animalconfig/buffalo.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/animalconfig/caterpillar.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/animalconfig/deer.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/animalconfig/duck.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/animalconfig/eagle.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/animalconfig/fox.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/animalconfig/goat.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/animalconfig/hog.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/animalconfig/horse.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/animalconfig/mouse.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/animalconfig/rabbit.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/animalconfig/sheep.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/animalconfig/snake.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/animalconfig/wolf.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/eating/bear.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/eating/buffalo.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/eating/caterpillar.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/eating/deer.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/eating/duck.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/eating/eagle.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/eating/fox.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/eating/goat.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/eating/hog.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/eating/horse.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/eating/mouse.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/eating/rabbit.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/eating/sheep.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/eating/snake.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/eating/wolf.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/plantconfig/flower.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/plantconfig/fruit.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/plantconfig/grass.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/plantconfig/vegetable.properties" afterDir="false" />
+    <list default="true" id="0553a62f-70f3-44cd-8715-a55d3ce2a739" name="Changes" comment="Commit">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/IslandService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/IslandService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/LocationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/LocationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/ui/View.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/ui/View.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -137,6 +78,43 @@
       <option name="presentableId" value="Default" />
       <updated>1696876546150</updated>
     </task>
+    <task id="LOCAL-00001" summary="Commit">
+      <created>1698005892675</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1698005892675</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Commit">
+      <created>1698005907120</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1698005907120</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Commit">
+      <created>1698006142072</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1698006142072</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="Commit" />
   </component>
 </project>

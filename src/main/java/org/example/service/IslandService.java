@@ -21,31 +21,27 @@ public class IslandService {
         return island;
     }
 
-
     public void initialize() throws InterruptedException {
         Location[][] locations = island.getLocations();
         int id = 0;
-        ExecutorService service;
-        do {
-            service = Executors.newFixedThreadPool(3);
-            for (int i = 0; i < locations.length; i++) {
-                for (int j = 0; j < locations[0].length; j++) {
-                    locations[i][j] = new Location();
-                    locations[i][j].setId(id++);
-                    int finalI = i;
-                    int finalJ = j;
-                    service.submit(() -> {
-                        try {
-                            locationService.initialize(locations[finalI][finalJ]);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    });
-                }
+        ExecutorService service = Executors.newFixedThreadPool(3);
+        for (int i = 0; i < locations.length; i++) {
+            for (int j = 0; j < locations[0].length; j++) {
+                locations[i][j] = new Location();
+                locations[i][j].setId(id++);
+                int finalI = i;
+                int finalJ = j;
+                service.submit(() -> {
+                    try {
+                        locationService.initialize(locations[finalI][finalJ]);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                });
             }
-            service.shutdown();
-
-        } while (!service.awaitTermination(10, TimeUnit.MINUTES));
+        }
+        service.shutdown();
+        service.awaitTermination(10, TimeUnit.MINUTES);
     }
 
     public int getAllAnimalsCount() {
@@ -99,13 +95,13 @@ public class IslandService {
         Location[][] locations = island.getLocations();
         Map<Animal, Location> newLocationsForAnimals = new HashMap<>();
         ExecutorService service = Executors.newFixedThreadPool(3);
-        final Location[] newLocation = new Location[1];
         for (int i = 0; i < locations.length; i++) {
             for (int j = 0; j < locations[0].length; j++) {
-                Location location = locations[i][j];
                 int finalI = i;
                 int finalJ = j;
                 service.submit(() -> {
+                    Location location = locations[finalI][finalJ];
+                    Location newLocation;
                     Map<Animal, Integer> stepsForAnimals = null;
                     try {
                         stepsForAnimals = locationService.getStepsForAnimalsInLocation(location);
@@ -116,17 +112,17 @@ public class IslandService {
                         Animal animal = entry.getKey();
                         int step = entry.getValue();
                         if (step > 0) {
-                            newLocation[0] = getNewLocationForAnimal(finalI, finalJ, step);
-                            if (newLocation[0] != location) {
-                                Location locationWithMinId = location.getId() < newLocation[0].getId() ? location : newLocation[0];
-                                Location locationWithMaxId = location.getId() > newLocation[0].getId() ? location : newLocation[0];
+                            newLocation = getNewLocationForAnimal(finalI, finalJ, step);
+                            if (newLocation != location) {
+                                Location locationWithMinId = location.getId() < newLocation.getId() ? location : newLocation;
+                                Location locationWithMaxId = location.getId() > newLocation.getId() ? location : newLocation;
                                 synchronized (locationWithMinId) {
                                     synchronized (locationWithMaxId) {
-                                        if (locationService.locationHasEnoughSpace(newLocation[0], animal.getClass())) {
-                                            newLocationsForAnimals.put(animal, newLocation[0]);
+                                        if (locationService.locationHasEnoughSpace(newLocation, animal.getClass())) {
+                                            newLocationsForAnimals.put(animal, newLocation);
                                             locationService.decreaseAnimalCount(location, animal.getClass());
                                             locationService.removeAnimal(location, animal);
-                                            locationService.increaseAnimalCount(newLocation[0], animal.getClass());
+                                            locationService.increaseAnimalCount(newLocation, animal.getClass());
                                         }
                                     }
                                 }

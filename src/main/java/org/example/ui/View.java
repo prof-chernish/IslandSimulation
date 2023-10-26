@@ -48,7 +48,7 @@ public class View {
             if (islandService.getAllAnimalsCount() == 0) {
                 executorService.shutdown();
             }
-        }, 0, delay, TimeUnit.MILLISECONDS);
+        }, 0, 100 * delay, TimeUnit.MILLISECONDS);
 
     }
 
